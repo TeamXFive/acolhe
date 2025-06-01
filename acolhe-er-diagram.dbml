@@ -1,0 +1,51 @@
+Table event {
+  event_id int [pk, increment]
+  name varchar
+  description text
+  date date
+  address_id int [ref: > address.address_id]
+
+  Note: "Extreme event that triggers the support flow"
+}
+
+Table address {
+  address_id int [pk, increment]
+  postal_code varchar
+  region_code varchar
+  administrative_area varchar
+  locality varchar
+  sublocality varchar
+  address_line varchar
+}
+
+Table user {
+  user_id int [pk, increment]
+  name varchar
+  cpf varchar
+  phone varchar
+
+  Note: "Person who receives the support message and schedules a session"
+}
+
+Table professional {
+  professional_id int [pk, increment]
+  name varchar
+  phone varchar
+  specialty varchar
+
+  Note: "Psychologist or professional providing support"
+}
+
+Table session {
+  session_id int [pk, increment]
+  datetime timestamp
+  status varchar
+  method varchar
+  link_web varchar
+  link_phone varchar
+  user_id int [ref: > user.user_id]
+  professional_id int [ref: > professional.professional_id]
+  event_id int [ref: > event.event_id]
+
+  Note: "A scheduled psychological support session"
+}
