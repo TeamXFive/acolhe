@@ -44,11 +44,15 @@
             <h2>Preparando o App Acolhe...</h2>
             <p>
                 Se nada acontecer nos próximos segundos,
-                <a href="app/index.html">clique aqui</a>.
+                <a href="/app/index.html">clique aqui</a>.
             </p>
         </div>
         <script>
-            window.location.href = "app/index.html";
+            document.addEventListener("DOMContentLoaded", function () {
+                setTimeout(function () {
+                    window.location.href = "/app/index.html";
+                }, 1500);
+            });
         </script>
     </body>
 </html>
