@@ -1,6 +1,4 @@
-// Video chat page JavaScript
 document.addEventListener("DOMContentLoaded", () => {
-    // DOM elements
     const userVideo = document.getElementById("userVideo");
     const chatPanel = document.getElementById("chatPanel");
     const toggleChatBtn = document.getElementById("toggleChatBtn");
@@ -12,14 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const shareScreenBtn = document.getElementById("shareScreenBtn");
     const endCallBtn = document.getElementById("endCallBtn");
 
-    // State variables
     let isChatOpen = true;
     let isMicOn = true;
     let isCameraOn = true;
     let isScreenSharing = false;
     let stream = null;
 
-    // Initialize user video
     async function initializeUserVideo() {
         try {
             stream = await navigator.mediaDevices.getUserMedia({
@@ -28,8 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             userVideo.srcObject = stream;
         } catch (error) {
-            console.error("Error accessing camera and microphone:", error);
-            // Show a camera-off state for user as well if access denied
             userVideo.parentElement.innerHTML = `
                 <div class="avatar-placeholder">
                     <i class="fas fa-user"></i>
@@ -43,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Toggle chat panel visibility
     function toggleChat() {
         isChatOpen = !isChatOpen;
         chatPanel.classList.toggle("collapsed", !isChatOpen);
@@ -52,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
             : '<i class="fas fa-chevron-left"></i>';
     }
 
-    // Toggle microphone
     function toggleMic() {
         isMicOn = !isMicOn;
         toggleMicBtn.innerHTML = isMicOn
@@ -61,13 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleMicBtn.classList.toggle("active", !isMicOn);
 
         if (stream) {
-            stream.getAudioTracks().forEach((track) => {
+            for (const track of stream.getAudioTracks()) {
                 track.enabled = isMicOn;
-            });
+            }
         }
     }
 
-    // Toggle camera
     function toggleCamera() {
         isCameraOn = !isCameraOn;
         toggleCameraBtn.innerHTML = isCameraOn
@@ -76,27 +67,24 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleCameraBtn.classList.toggle("active", !isCameraOn);
 
         if (stream) {
-            stream.getVideoTracks().forEach((track) => {
+            for (const track of stream.getVideoTracks()) {
                 track.enabled = isCameraOn;
-            });
+            }
         }
     }
 
-    // Simulate screen sharing (just a toggle in this demo)
     function toggleScreenShare() {
         isScreenSharing = !isScreenSharing;
         shareScreenBtn.classList.toggle("active", isScreenSharing);
     }
 
-    // Send a message
     function sendMessage() {
         const messageText = messageInput.value.trim();
         if (messageText) {
             const now = new Date();
-            const timeString =
-                now.getHours().toString().padStart(2, "0") +
-                ":" +
-                now.getMinutes().toString().padStart(2, "0");
+            const hours = now.getHours().toString().padStart(2, "0");
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const timeString = `${hours}:${minutes}`;
 
             const messageHTML = `
                 <div class="message user">
@@ -110,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
             messageInput.value = "";
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Simulate professional response after a short delay
             setTimeout(
                 simulateProfessionalResponse,
                 1000 + Math.random() * 2000
@@ -118,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Simulate a response from the professional
     function simulateProfessionalResponse() {
         const responses = [
             "Como você se sente em relação a isso?",
@@ -132,10 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const randomResponse =
             responses[Math.floor(Math.random() * responses.length)];
         const now = new Date();
-        const timeString =
-            now.getHours().toString().padStart(2, "0") +
-            ":" +
-            now.getMinutes().toString().padStart(2, "0");
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const timeString = `${hours}:${minutes}`;
 
         const messageHTML = `
             <div class="message professional">
@@ -149,27 +134,24 @@ document.addEventListener("DOMContentLoaded", () => {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // End call and return to schedule
     function endCall() {
         if (confirm("Deseja encerrar esta sessão?")) {
             window.location.href = "schedule.html";
         }
     }
 
-    // Event listeners
     toggleChatBtn.addEventListener("click", toggleChat);
     toggleMicBtn.addEventListener("click", toggleMic);
     toggleCameraBtn.addEventListener("click", toggleCamera);
     shareScreenBtn.addEventListener("click", toggleScreenShare);
     endCallBtn.addEventListener("click", endCall);
-
     sendMessageBtn.addEventListener("click", sendMessage);
-    messageInput.addEventListener("keypress", function (e) {
+
+    messageInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
             sendMessage();
         }
     });
 
-    // Initialize
     initializeUserVideo();
 });

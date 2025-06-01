@@ -1,4 +1,3 @@
-// Login page JavaScript
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
     const cpfInput = document.getElementById("cpf");
@@ -6,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cpfError = document.getElementById("cpf-error");
     const passwordError = document.getElementById("password-error");
 
-    // Add CPF mask - Format as: 000.000.000-00
+    // Mascara do CPF
     cpfInput.addEventListener("input", (e) => {
         let value = e.target.value.replace(/\D/g, "");
         if (value.length > 11) {
@@ -30,17 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
         e.target.value = formattedValue;
     });
 
-    // Form submission
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        // Reset error messages
         cpfError.textContent = "";
         passwordError.textContent = "";
 
         let isValid = true;
 
-        // Simple validation - just check if fields are empty
         if (!cpfInput.value.trim()) {
             cpfError.textContent = "CPF é obrigatório";
             isValid = false;
@@ -52,8 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (isValid) {
-            // In a real app, we would do API validation here
-            // For demo purposes, just redirect to schedule page
+            // TODO: Implementar autenticação real
             window.location.href = "schedule.html";
         }
     });
