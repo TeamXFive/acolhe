@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const logoBtn = document.querySelector(".navbar > .logo");
     const logoutBtn = document.getElementById("logoutBtn");
     const newSessionBtn = document.getElementById("newSessionBtn");
     const sessionCards = document.querySelectorAll(".session-card");
@@ -6,7 +7,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     logoutBtn.addEventListener("click", () => {
         // TODO: Implemetar logica de logout
-        window.location.href = "login.html";
+        window.location.href = "/login.html";
+    });
+
+    logoBtn.addEventListener("click", () => {
+        window.location.href = "/login.html";
     });
 
     newSessionBtn.addEventListener("click", () => {
