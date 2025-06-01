@@ -5,22 +5,12 @@ public class User {
     private String fullName;
     private String phone;
     private String document;
-    private String status;
 
     public User(int userId, String fullName, String phone, String document, String status) {
         this.userId = userId;
         this.fullName = fullName;
         this.phone = phone;
         this.document = document;
-        this.status = status;
-    }
-
-    public void activate() {
-        this.status = "ACTIVE";
-    }
-
-    public void deactivate() {
-        this.status = "INACTIVE";
     }
 
     public String getFirstName() {
@@ -60,13 +50,5 @@ public class User {
 
     public void setDocument(String document) {
         this.document = document;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }
