@@ -14,6 +14,9 @@ public class Professional {
         this.status = status;
     }
 
+    public Professional(int i, String string, String string2, boolean b) {
+    }
+
     public boolean isAvailable() {
         return status.equalsIgnoreCase("AVAILABLE");
     }
