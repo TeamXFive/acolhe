@@ -1,0 +1,103 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin-bottom: 0;
+    color: var(--primary-color);
+}
+
+.sessions-list {
+    margin-top: 30px;
+}
+
+.sessions-list h2 {
+    color: var(--primary-color);
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.session-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.session-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.session-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.session-time {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.date {
+    font-weight: 500;
+}
+
+.time {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.session-details {
+    margin-bottom: 20px;
+}
+
+.professional-name {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.specialization {
+    color: var(--gray);
+}
+
+.session-card .btn-primary {
+    margin-top: auto;
+}
+
+.past-session {
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .session-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .session-card {
+        padding: 15px;
+    }
+
+    .professional-name {
+        font-size: 1.1rem;
+    }
+}
