@@ -99,7 +99,13 @@ body {
 }
 
 .chat-panel.collapsed {
-    width: 60px;
+    width: 40px;
+
+    & .chat-messages,
+    & .chat-input,
+    & .chat-header>h2 {
+        display: none;
+    }
 }
 
 .chat-header {
