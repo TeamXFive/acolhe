@@ -1,3 +1,5 @@
+package backoffice;
+
 public enum ProfessionalStatus {
     AVAILABLE(0, "Available"),
     BUSY(1, "Busy"),

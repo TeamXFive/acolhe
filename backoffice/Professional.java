@@ -3,8 +3,10 @@ public class Professional {
     private int professionalId;
     private String fullName;
     private String phone;
+    private String specialization;
     private String licenseNumber;
     private String status;
+    private boolean activity;
 
     public Professional(int professionalId, String fullName, String phone, String licenseNumber, String status) {
         this.professionalId = professionalId;
@@ -15,6 +17,10 @@ public class Professional {
     }
 
     public Professional(int i, String string, String string2, boolean b) {
+        this.professionalId = i;
+        this.fullName = string;
+        this.specialization = string2;
+        this.activity = b;
     }
 
     public boolean isAvailable() {
@@ -69,5 +75,21 @@ public class Professional {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+    
+    public boolean getActivity() {
+        return activity;
+    }
+
+    public void setActivity(boolean activity) {
+        this.activity = activity;
     }
 }
