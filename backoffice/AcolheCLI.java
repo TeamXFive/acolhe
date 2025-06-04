@@ -106,17 +106,55 @@ public class AcolheCLI {
                 Professional p = professionals.get(i);
                 System.out.println((i + 1) + ". " + p.getFullName());
             }
+
             System.out.println((professionals.size() + 1) + ". Voltar");
 
             System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine();
 
-            if (opcao.equals(String.valueOf(professionals.size() + 1))) {
-                return;
-            } else {
-                System.out.println("Opção inválida.");
+            try {
+                int escolha = Integer.parseInt(opcao);
+
+                if (escolha == professionals.size() + 1) {
+                    return;
+                } else if (escolha >= 0 && escolha <= professionals.size()) {
+                    profissional(escolha - 1);
+                } else {
+                    System.out.println("Opção inválida.");
+                }
+            } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Digite um número.");
             }
         }
+    }
+
+    private static void profissional(int index){
+        while (true) {
+            Professional p = professionals.get(index);
+            System.out.println("\nProfissional selecionado: " + p.getFullName());
+            System.out.println("Área do profissional: " + p.getSpecialization());
+            System.out.println("1. Apagar Profissional");
+            System.out.println("2. Voltar");
+
+            String opcao = scanner.nextLine();
+
+            try{
+                int escolha = Integer.parseInt(opcao);
+                if(escolha == 2){
+                    return;
+                } else if(escolha == 1){
+                    System.out.println("Profissional apagado");
+                    professionals.remove(index);
+                    return;
+                } else{
+                    System.out.println("Opção inválida");
+                }
+            } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Digite um número.");
+            }
+        }
+        
+        
     }
 
     private static void disparoSMS() {
