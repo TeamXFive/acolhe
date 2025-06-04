@@ -36,9 +36,12 @@ public class Session {
         professional.setAvailable();
     }
 
+    // O método getSessionDetails não está sendo utilizado no AcolheCLI, pode ser removido
+    /*
     public String getSessionDetails() {
         return "Session for " + user.getFullName() + " with " + professional.getFullName() + " at " + datetime + " via " + method;
     }
+    */
 
     // Getters and Setters
 

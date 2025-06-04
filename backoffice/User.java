@@ -5,18 +5,24 @@ public class User {
     private String fullName;
     private String phone;
     private String document;
+    // O campo 'status' não está sendo utilizado na classe User.java, pode ser removido.
+    // private String status;
 
     public User(int userId, String fullName, String phone, String document, String status) {
         this.userId = userId;
         this.fullName = fullName;
         this.phone = phone;
         this.document = document;
+        // this.status = status; // Removido
     }
 
+    // O método getFirstName não está sendo utilizado no AcolheCLI, pode ser removido.
+    /*
     public String getFirstName() {
         if (fullName == null || fullName.isEmpty()) return "";
         return fullName.split(" ")[0];
     }
+    */
 
     // Getters and Setters
 

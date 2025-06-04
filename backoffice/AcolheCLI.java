@@ -3,6 +3,7 @@ package backoffice;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.Console; // Importar Console para leitura de senha oculta
 
 public class AcolheCLI {
 
@@ -10,20 +11,74 @@ public class AcolheCLI {
     private static List<Event> events = new ArrayList<>();
     private static List<Professional> professionals = new ArrayList<>();
     private static List<Session> sessions = new ArrayList<>();
+    private static User currentUser; // Armazenar o usuário logado
 
     public static void main(String[] args) {
         seedData();
-        login();
+        createAccountAndLogin();
     }
 
-    private static void login() {
-        System.out.println("Bem-vindo ao Sistema Acolhe! Entre com seu login:");
-        System.out.print("Nome: ");
-        scanner.nextLine(); // Entrada de nome (não é validada)
-        System.out.print("Senha: ");
-        scanner.nextLine(); // Entrada de senha (não é validada)
+    private static void createAccountAndLogin() {
+        System.out.println("Bem vindo ao sistema Acolhe! Crie seu usuário");
 
+        String newUserName;
+        while (true) {
+            System.out.print("Entre com seu nome e sobrenome: ");
+            newUserName = scanner.nextLine();
+            if (newUserName.matches("^[a-zA-Z\\s]+$")) { // Aceita apenas letras e espaços
+                break;
+            } else {
+                System.out.println("Nome inválido. Por favor, use apenas letras e espaços.");
+            }
+        }
+
+        String newUserPassword = readPassword("Entre com sua senha numérica de 6 dígitos: "); // Usar readPassword
+
+        // Criar um usuário temporário para simular o registro
+        currentUser = new User(0, newUserName, "", "", ""); // ID 0, telefone e documento vazios por enquanto
+
+        System.out.println("\nEntre com seu login");
+        String loginName;
+        String loginPassword;
+
+        while (true) {
+            System.out.print("Nome: ");
+            loginName = scanner.nextLine();
+            loginPassword = readPassword("Senha: "); // Usar readPassword
+
+            if (loginName.equals(currentUser.getFullName()) && loginPassword.equals(newUserPassword)) {
+                System.out.println("Login bem-sucedido!");
+                break;
+            } else {
+                System.out.println("Nome de usuário ou senha incorretos. Tente novamente.");
+            }
+        }
         menu();
+    }
+
+    // Método auxiliar para ler a senha oculta
+    private static String readPassword(String prompt) {
+        Console console = System.console();
+        if (console != null) {
+            char[] passwordChars = console.readPassword(prompt);
+            String password = new String(passwordChars);
+            if (password.matches("^\\d{6}$")) {
+                return password;
+            } else {
+                System.out.println("Senha inválida. Por favor, insira uma senha numérica de 6 dígitos.");
+                return readPassword(prompt); // Tentar novamente
+            }
+        } else {
+            // Fallback para ambientes sem Console (IDEs como Eclipse/IntelliJ geralmente não têm)
+            System.out.print(prompt + " (A senha será visível no terminal): ");
+            String password = scanner.nextLine();
+            if (password.matches("^\\d{6}$")) {
+                return password;
+            } else {
+                System.out.println("Senha inválida. Por favor, insira uma senha numérica de 6 dígitos.");
+                return readPassword(prompt); // Tentar novamente
+            }
+        }
     }
 
     private static void menu() {
@@ -31,7 +86,7 @@ public class AcolheCLI {
             System.out.println("\nMenu Sistema Acolhe");
             System.out.println("1. Listar eventos críticos");
             System.out.println("2. Listar sessões agendadas");
-            System.out.println("3. Listar profissionais");
+            System.out.println("3. Gerenciar profissionais");
             System.out.println("4. Disparo de SMS");
             System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
@@ -46,7 +101,7 @@ public class AcolheCLI {
                     listarSessoes();
                     break;
                 case "3":
-                    listarProfissionais();
+                    gerenciarProfissionais();
                     break;
                 case "4":
                     disparoSMS();
@@ -63,8 +118,12 @@ public class AcolheCLI {
     private static void listarEventos() {
         while (true) {
             System.out.println("\nEventos Críticos:");
-            for (int i = 0; i < events.size(); i++) {
-                System.out.println((i + 1) + ". " + events.get(i).getName() + " - " + events.get(i).getLocation());
+            if (events.isEmpty()) {
+                System.out.println("Nenhum evento crítico cadastrado.");
+            } else {
+                for (int i = 0; i < events.size(); i++) {
+                    System.out.println((i + 1) + ". " + events.get(i).getName() + " - " + events.get(i).getLocation());
+                }
             }
             System.out.println((events.size() + 1) + ". Voltar");
 
@@ -82,9 +141,13 @@ public class AcolheCLI {
     private static void listarSessoes() {
         while (true) {
             System.out.println("\nSessões Agendadas:");
-            for (int i = 0; i < sessions.size(); i++) {
-                Session s = sessions.get(i);
-                System.out.println((i + 1) + ". " + s.getDatetime() + " - " + s.getUser().getFullName().split(" ")[1]);
+            if (sessions.isEmpty()) {
+                System.out.println("Nenhuma sessão agendada.");
+            } else {
+                for (int i = 0; i < sessions.size(); i++) {
+                    Session s = sessions.get(i);
+                    System.out.println((i + 1) + ". " + s.getDatetime() + " - " + s.getUser().getFullName().split(" ")[0]);
+                }
             }
             System.out.println((sessions.size() + 1) + ". Voltar");
 
@@ -99,69 +162,97 @@ public class AcolheCLI {
         }
     }
 
-    private static void listarProfissionais() {
+    private static void gerenciarProfissionais() {
         while (true) {
-            System.out.println("\nProfissionais Disponíveis:");
-            for (int i = 0; i < professionals.size(); i++) {
-                Professional p = professionals.get(i);
-                System.out.println((i + 1) + ". " + p.getFullName());
+            System.out.println("\nGerenciar Profissionais:");
+            System.out.println("1. Cadastrar Profissional");
+            if (professionals.isEmpty()) {
+                System.out.println("Nenhum profissional cadastrado.");
+            } else {
+                for (int i = 0; i < professionals.size(); i++) {
+                    Professional p = professionals.get(i);
+                    System.out.println((i + 2) + ". " + p.getFullName() + " (" + p.getSpecialization() + ")");
+                }
             }
-
-            System.out.println((professionals.size() + 1) + ". Voltar");
+            System.out.println((professionals.size() + 2) + ". Voltar");
 
             System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine();
 
             try {
                 int escolha = Integer.parseInt(opcao);
-
-                if (escolha == professionals.size() + 1) {
+                if (escolha == 1) {
+                    cadastrarProfissional();
+                } else if (escolha >= 2 && escolha <= professionals.size() + 1) {
+                    gerenciarProfissionalDetalhes(professionals.get(escolha - 2));
+                } else if (escolha == professionals.size() + 2) {
                     return;
-                } else if (escolha >= 0 && escolha <= professionals.size()) {
-                    profissional(escolha - 1);
                 } else {
                     System.out.println("Opção inválida.");
                 }
             } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida. Digite um número.");
+                System.out.println("Opção inválida.");
             }
         }
     }
 
-    private static void profissional(int index){
-        while (true) {
-            Professional p = professionals.get(index);
-            System.out.println("\nProfissional selecionado: " + p.getFullName());
-            System.out.println("Área do profissional: " + p.getSpecialization());
-            System.out.println("1. Apagar Profissional");
-            System.out.println("2. Voltar");
+    private static void cadastrarProfissional() {
+        System.out.println("\nCadastrar Novo Profissional:");
+        System.out.print("Nome Completo: ");
+        String fullName = scanner.nextLine();
+        System.out.print("Telefone: ");
+        String phone = scanner.nextLine();
+        System.out.print("Especialização: ");
+        String specialization = scanner.nextLine();
+        System.out.print("Número de Licença: ");
+        String licenseNumber = scanner.nextLine();
 
+        // O status e activity agora são definidos automaticamente
+        String status = "AVAILABLE";
+        boolean activity = true;
+
+        int newId = professionals.isEmpty() ? 1 : professionals.get(professionals.size() - 1).getProfessionalId() + 1;
+        Professional newProfessional = new Professional(newId, fullName, phone, specialization, licenseNumber, status, activity);
+        professionals.add(newProfessional);
+        System.out.println("Profissional cadastrado com sucesso com status 'AVAILABLE' e ativo!");
+    }
+
+    private static void gerenciarProfissionalDetalhes(Professional professional) {
+        while (true) {
+            System.out.println("\nProfissional Selecionado: " + professional.getFullName());
+            System.out.println("1. Excluir profissional");
+            System.out.println("2. Voltar");
+            System.out.print("Escolha uma opção: ");
             String opcao = scanner.nextLine();
 
-            try{
-                int escolha = Integer.parseInt(opcao);
-                if(escolha == 2){
+            switch (opcao) {
+                case "1":
+                    excluirProfissional(professional);
                     return;
-                } else if(escolha == 1){
-                    System.out.println("Profissional apagado");
-                    professionals.remove(index);
+                case "2":
                     return;
-                } else{
-                    System.out.println("Opção inválida");
-                }
-            } catch (NumberFormatException e) {
-            System.out.println("Entrada inválida. Digite um número.");
+                default:
+                    System.out.println("Opção inválida.");
             }
         }
-        
-        
+    }
+
+    private static void excluirProfissional(Professional professional) {
+        professionals.remove(professional);
+        System.out.println("Profissional " + professional.getFullName() + " excluído com sucesso.");
     }
 
     private static void disparoSMS() {
         while (true) {
             System.out.println("\nSelecione o evento para disparo do SMS Broadcast:");
-            for (int i = 0; i < events.size(); i++) {
-                System.out.println((i + 1) + ". " + events.get(i).getName() + " - " + events.get(i).getLocation());
+            if (events.isEmpty()) {
+                System.out.println("Nenhum evento disponível para disparo de SMS.");
+            } else {
+                for (int i = 0; i < events.size(); i++) {
+                    Event event = events.get(i);
+                    String smsStatus = event.isSmsSent() ? "SMS enviado" : "SMS não enviado";
+                    System.out.println((i + 1) + ". " + event.getName() + " - " + event.getLocation() + " (" + smsStatus + ")");
+                }
             }
             System.out.println((events.size() + 1) + ". Voltar");
 
@@ -171,7 +262,16 @@ public class AcolheCLI {
             try {
                 int escolha = Integer.parseInt(opcao);
                 if (escolha >= 1 && escolha <= events.size()) {
-                    System.out.println("SMS enviado para a região de " + events.get(escolha - 1).getLocation() + ".");
+                    Event selectedEvent = events.get(escolha - 1);
+                    if (selectedEvent.isSmsSent()) {
+                        System.out.println("SMS já foi enviado.");
+                    } else {
+                        System.out.println("SMS enviado com sucesso para a região de " + selectedEvent.getLocation() + ".");
+                        selectedEvent.setSmsSent(true);
+                    }
+                    System.out.println("1. Voltar");
+                    scanner.nextLine();
+                    return;
                 } else if (escolha == events.size() + 1) {
                     return;
                 } else {
@@ -185,14 +285,15 @@ public class AcolheCLI {
 
     private static void seedData() {
         // Eventos
-        events.add(new Event(1, "Enchente", "Climático", "2025-05-01", "RS", "Enchentes severas no RS"));
-        events.add(new Event(2, "Deslizamento", "Climático", "2025-05-02", "SC", "Deslizamento na serra catarinense"));
-        events.add(new Event(3, "Tempestade", "Climático", "2025-05-03", "PR", "Tempestade com ventos fortes no PR"));
+        events.add(new Event(1, "Enchente", "Climático", "2025-05-01", "RS", "Enchentes severas no RS", false));
+        events.add(new Event(2, "Deslizamento", "Climático", "2025-05-02", "SC", "Deslizamento na serra catarinense", false));
+        events.add(new Event(3, "Tempestade", "Climático", "2025-05-03", "PR", "Tempestade com ventos fortes no PR", false));
 
-        // Profissionais
-        professionals.add(new Professional(1, "Ana Silva", "Psicóloga", true));
-        professionals.add(new Professional(2, "Carlos Souza", "Psicólogo", true));
-        professionals.add(new Professional(3, "Mariana Lima", "Assistente Social", true));
+        // Profissionais (mockup data)
+        // Usando o construtor mais completo e definindo status e activity padrão
+        professionals.add(new Professional(1, "Ana Silva", "11911112222", "Psicóloga", "12345BR", "AVAILABLE", true));
+        professionals.add(new Professional(2, "Carlos Souza", "11933334444", "Psicólogo", "67890BR", "AVAILABLE", true));
+        professionals.add(new Professional(3, "Mariana Lima", "11955556666", "Assistente Social", "11223BR", "AVAILABLE", true));
 
         // Usuários
         User u1 = new User(1, "Lucas Andrade", "11999999999", "123456789", "ACTIVE");

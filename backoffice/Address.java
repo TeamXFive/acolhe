@@ -1,6 +1,6 @@
 package backoffice;
 public class Address {
-    
+
     private int id;
     private String postalCode;
     private String regionCode;

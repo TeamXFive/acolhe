@@ -6,19 +6,24 @@ public class Event {
     private String date;
     private String location;
     private String description;
+    private boolean smsSent; // Novo campo para o status do SMS
 
-    public Event(int eventId, String name, String type, String date, String location, String description) {
+    public Event(int eventId, String name, String type, String date, String location, String description, boolean smsSent) {
         this.eventId = eventId;
         this.name = name;
         this.type = type;
         this.date = date;
         this.location = location;
         this.description = description;
+        this.smsSent = smsSent;
     }
 
+    // O método getEventSummary não está sendo utilizado no AcolheCLI, pode ser removido
+    /*
     public String getEventSummary() {
         return name + " - " + type + " on " + date + " at " + location;
     }
+    */
 
     // Getters and Setters
 
@@ -68,5 +73,13 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isSmsSent() {
+        return smsSent;
+    }
+
+    public void setSmsSent(boolean smsSent) {
+        this.smsSent = smsSent;
     }
 }

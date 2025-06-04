@@ -5,23 +5,27 @@ public class Professional {
     private String phone;
     private String specialization;
     private String licenseNumber;
-    private String status;
-    private boolean activity;
+    private String status; // "AVAILABLE", "BUSY"
+    private boolean activity; // true para ativo, false para inativo
 
-    public Professional(int professionalId, String fullName, String phone, String licenseNumber, String status) {
+    // Construtor principal
+    public Professional(int professionalId, String fullName, String phone, String specialization, String licenseNumber, String status, boolean activity) {
         this.professionalId = professionalId;
         this.fullName = fullName;
         this.phone = phone;
+        this.specialization = specialization;
         this.licenseNumber = licenseNumber;
         this.status = status;
+        this.activity = activity;
     }
 
-    public Professional(int i, String string, String string2, boolean b) {
-        this.professionalId = i;
-        this.fullName = string;
-        this.specialization = string2;
-        this.activity = b;
-    }
+    // A lógica de uso dos campos 'status' e 'activity' é a seguinte:
+    // 'status' é usado nos métodos isAvailable(), setAvailable(), setBusy() para indicar a disponibilidade
+    // de um profissional para novas sessões. No método Session.complete() e Session.cancel(), o status
+    // do profissional é alterado para "AVAILABLE" após a conclusão ou cancelamento da sessão.
+    // O campo 'activity' é um booleano simples que indica se o profissional está ativo no sistema.
+    // Embora não haja uma lógica de "inativação" explícita no AcolheCLI para profissionais,
+    // a sua presença permite futuras expansões, como filtros para listar apenas profissionais ativos.
 
     public boolean isAvailable() {
         return status.equalsIgnoreCase("AVAILABLE");
@@ -84,7 +88,7 @@ public class Professional {
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
-    
+
     public boolean getActivity() {
         return activity;
     }
