@@ -19,14 +19,6 @@ public class Professional {
         this.activity = activity;
     }
 
-    // A lógica de uso dos campos 'status' e 'activity' é a seguinte:
-    // 'status' é usado nos métodos isAvailable(), setAvailable(), setBusy() para indicar a disponibilidade
-    // de um profissional para novas sessões. No método Session.complete() e Session.cancel(), o status
-    // do profissional é alterado para "AVAILABLE" após a conclusão ou cancelamento da sessão.
-    // O campo 'activity' é um booleano simples que indica se o profissional está ativo no sistema.
-    // Embora não haja uma lógica de "inativação" explícita no AcolheCLI para profissionais,
-    // a sua presença permite futuras expansões, como filtros para listar apenas profissionais ativos.
-
     public boolean isAvailable() {
         return status.equalsIgnoreCase("AVAILABLE");
     }
