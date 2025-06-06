@@ -1,15 +1,24 @@
-package backoffice;
+package backoffice.model;
+
 public class Professional {
+    
     private int professionalId;
     private String fullName;
     private String phone;
     private String specialization;
     private String licenseNumber;
-    private String status; // "AVAILABLE", "BUSY"
-    private boolean activity; // true para ativo, false para inativo
-
-    // Construtor principal
-    public Professional(int professionalId, String fullName, String phone, String specialization, String licenseNumber, String status, boolean activity) {
+    private String status;
+    private boolean activity;
+    
+    public Professional (
+        int professionalId,
+        String fullName,
+        String phone,
+        String specialization,
+        String licenseNumber,
+        String status,
+        boolean activity
+    ) {
         this.professionalId = professionalId;
         this.fullName = fullName;
         this.phone = phone;
@@ -37,55 +46,62 @@ public class Professional {
         return professionalId;
     }
 
-    public void setProfessionalId(int professionalId) {
+    public Professional setProfessionalId(int professionalId) {
         this.professionalId = professionalId;
+        return this;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
+    public Professional setFullName(String fullName) {
         this.fullName = fullName;
+        return this;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public Professional setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+        return this;
     }
 
     public String getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public Professional setSpecialization(String specialization) {
         this.specialization = specialization;
+        return this;
     }
 
-    public boolean getActivity() {
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public Professional setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
+        return this;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Professional setStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public boolean isActivity() {
         return activity;
     }
 
-    public void setActivity(boolean activity) {
+    public Professional setActivity(boolean activity) {
         this.activity = activity;
+        return this;
     }
 }

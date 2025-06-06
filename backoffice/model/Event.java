@@ -1,4 +1,5 @@
-package backoffice;
+package backoffice.model;
+
 public class Event {
     private int eventId;
     private String name;
@@ -6,9 +7,17 @@ public class Event {
     private String date;
     private String location;
     private String description;
-    private boolean smsSent; // Novo campo para o status do SMS
+    private boolean smsSent;
 
-    public Event(int eventId, String name, String type, String date, String location, String description, boolean smsSent) {
+    public Event (
+        int eventId,
+        String name,
+        String type,
+        String date,
+        String location,
+        String description,
+        boolean smsSent
+    ) {
         this.eventId = eventId;
         this.name = name;
         this.type = type;
@@ -18,68 +27,66 @@ public class Event {
         this.smsSent = smsSent;
     }
 
-    // O método getEventSummary não está sendo utilizado no AcolheCLI, pode ser removido
-    /*
-    public String getEventSummary() {
-        return name + " - " + type + " on " + date + " at " + location;
-    }
-    */
-
-    // Getters and Setters
-
     public int getEventId() {
         return eventId;
     }
 
-    public void setEventId(int eventId) {
+    public Event setEventId(int eventId) {
         this.eventId = eventId;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Event setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public Event setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public Event setDate(String date) {
         this.date = date;
+        return this;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public Event setLocation(String location) {
         this.location = location;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Event setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public boolean isSmsSent() {
         return smsSent;
     }
 
-    public void setSmsSent(boolean smsSent) {
+    public Event setSmsSent(boolean smsSent) {
         this.smsSent = smsSent;
+        return this;
     }
 }

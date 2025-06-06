@@ -1,4 +1,5 @@
-package backoffice;
+package backoffice.model;
+
 public class Address {
 
     private int id;
@@ -8,6 +9,24 @@ public class Address {
     private String locality;
     private String sublocality;
     private String addressLine;
+
+    public Address (
+        int id,
+        String postalCode,
+        String regionCode,
+        String administrativeArea,
+        String locality,
+        String sublocality,
+        String addressLine
+    ) {
+        this.id = id;
+        this.postalCode = postalCode;
+        this.regionCode = regionCode;
+        this.administrativeArea = administrativeArea;
+        this.locality = locality;
+        this.sublocality = sublocality;
+        this.addressLine = addressLine;
+    }
 
     public int getId() {
         return id;

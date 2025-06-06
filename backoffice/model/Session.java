@@ -1,4 +1,5 @@
-package backoffice;
+package backoffice.model;
+
 public class Session {
     private int sessionId;
     private String datetime;
@@ -10,7 +11,17 @@ public class Session {
     private Professional professional;
     private Event event;
 
-    public Session(int sessionId, String datetime, String status, String method, String linkWeb, String linkPhone, User user, Professional professional, Event event) {
+    public Session (
+        int sessionId,
+        String datetime,
+        String status,
+        String method,
+        String linkWeb,
+        String linkPhone,
+        User user,
+        Professional professional,
+        Event event
+    ) {
         this.sessionId = sessionId;
         this.datetime = datetime;
         this.status = status;
@@ -36,84 +47,86 @@ public class Session {
         professional.setAvailable();
     }
 
-    // O método getSessionDetails não está sendo utilizado no AcolheCLI, pode ser removido
-    /*
-    public String getSessionDetails() {
-        return "Session for " + user.getFullName() + " with " + professional.getFullName() + " at " + datetime + " via " + method;
-    }
-    */
-
     // Getters and Setters
-
+    
     public int getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(int sessionId) {
+    public Session setSessionId(int sessionId) {
         this.sessionId = sessionId;
+        return this;
     }
 
     public String getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(String datetime) {
+    public Session setDatetime(String datetime) {
         this.datetime = datetime;
+        return this;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public Session setStatus(String status) {
         this.status = status;
+        return this;
     }
 
     public String getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
+    public Session setMethod(String method) {
         this.method = method;
+        return this;
     }
 
     public String getLinkWeb() {
         return linkWeb;
     }
 
-    public void setLinkWeb(String linkWeb) {
+    public Session setLinkWeb(String linkWeb) {
         this.linkWeb = linkWeb;
+        return this;
     }
 
     public String getLinkPhone() {
         return linkPhone;
     }
 
-    public void setLinkPhone(String linkPhone) {
+    public Session setLinkPhone(String linkPhone) {
         this.linkPhone = linkPhone;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public Session setUser(User user) {
         this.user = user;
+        return this;
     }
 
     public Professional getProfessional() {
         return professional;
     }
 
-    public void setProfessional(Professional professional) {
+    public Session setProfessional(Professional professional) {
         this.professional = professional;
+        return this;
     }
 
     public Event getEvent() {
         return event;
     }
 
-    public void setEvent(Event event) {
+    public Session setEvent(Event event) {
         this.event = event;
+        return this;
     }
 }
