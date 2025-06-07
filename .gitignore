@@ -22,3 +22,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Compilados Java
+/out/
+/target/
+/build/
+
+# Configurações específicas do IntelliJ IDEA
+*.iml
+.idea/
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+
